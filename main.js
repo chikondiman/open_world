@@ -1,6 +1,24 @@
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js';
+// Option 1: Import the entire three.js core library.
+import * as THREE from 'three';
 
-import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js';
+const scene = new THREE.Scene();
+
+
+// Option 2: Import just the parts you need.
+import { Scene } from 'three';
+
+const scene = new Scene();
+
+
+<script type="module">
+
+  // Find the latest version by visiting https://cdn.skypack.dev/three.
+
+  import { OrbitControls } from 'https://cdn.skypack.dev/three@<version>/examples/jsm/controls/OrbitControls.js';
+
+  const controls = new OrbitControls();
+
+</script>
 
 class BasicWorldDemo {
     constructor() {
@@ -109,3 +127,14 @@ class BasicWorldDemo {
     this._camera.updateProjectionMatrix();
     this._threejs.setSize(window.innerWidth, window.innerHeight);
   }
+
+  _RAF() {
+    requestAnimationFrame(() => {
+      this._threejs.render(this._scene, this._camera);
+      this._RAF();
+    });
+  }
+
+
+
+}
