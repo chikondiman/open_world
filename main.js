@@ -9,14 +9,17 @@ import { Scene } from 'three';
 
 const scene = new Scene();
 
-
-<script type="module">
-
-  // Find the latest version by visiting https://cdn.skypack.dev/three.
+const controls = new OrbitControls();
 
   import { OrbitControls } from 'https://cdn.skypack.dev/three@<version>/examples/jsm/controls/OrbitControls.js';
 
-  const controls = new OrbitControls();
+<script type="module">
+
+  // Find the latest version by visiting https://cdn.skypack.dev/three.js
+
+
+
+
 
 </script>
 
