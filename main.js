@@ -47,3 +47,65 @@ class BasicWorldDemo {
         light.shadow.camera.top = 100;
         light.shadow.camera.bottom = -100;
         this._scene.add(light);
+
+        light = new THREE.AmbientLight(0x101010);
+    this._scene.add(light);
+
+    const controls = new OrbitControls(
+      this._camera, this._threejs.domElement);
+    controls.target.set(0, 20, 0);
+    controls.update();
+
+    const loader = new THREE.CubeTextureLoader();
+    const texture = loader.load([
+        './resources/posx.jpg',
+        './resources/negx.jpg',
+        './resources/posy.jpg',
+        './resources/negy.jpg',
+        './resources/posz.jpg',
+        './resources/negz.jpg',
+    ]);
+    this._scene.background = texture;
+
+    const plane = new THREE.Mesh(
+        new THREE.PlaneGeometry(100, 100, 10, 10),
+        new THREE.MeshStandardMaterial({
+            color: 0xFFFFFF,
+          }));
+    plane.castShadow = false;
+    plane.receiveShadow = true;
+    plane.rotation.x = -Math.PI / 2;
+    this._scene.add(plane);
+
+    const box = new THREE.Mesh(
+      new THREE.BoxGeometry(2, 2, 2),
+      new THREE.MeshStandardMaterial({
+          color: 0xFFFFFF,
+      }));
+    box.position.set(0, 1, 0);
+    box.castShadow = true;
+    box.receiveShadow = true;
+    this._scene.add(box);
+
+    for (let x = -8; x < 8; x++) {
+      for (let y = -8; y < 8; y++) {
+        const box = new THREE.Mesh(
+          new THREE.BoxGeometry(2, 2, 2),
+          new THREE.MeshStandardMaterial({
+              color: 0x808080,
+          }));
+        box.position.set(Math.random() + x * 5, Math.random() * 4.0 + 2.0, Math.random() + y * 5);
+        box.castShadow = true;
+        box.receiveShadow = true;
+        this._scene.add(box);
+      }
+    }
+
+    this._RAF();
+  }
+
+  _OnWindowResize() {
+    this._camera.aspect = window.innerWidth / window.innerHeight;
+    this._camera.updateProjectionMatrix();
+    this._threejs.setSize(window.innerWidth, window.innerHeight);
+  }
